@@ -1,5 +1,4 @@
-﻿using System;
-namespace desafio_framework.Models
+﻿namespace desafio_framework_andressanowasyk
 {
     public class Album
     {

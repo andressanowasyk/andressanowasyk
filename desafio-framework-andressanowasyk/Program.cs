@@ -6,7 +6,7 @@ namespace desafio_framework_andressanowasyk
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            string opcaoUsuario = ObterOpcaoUsuario();
         }
     }
 }
