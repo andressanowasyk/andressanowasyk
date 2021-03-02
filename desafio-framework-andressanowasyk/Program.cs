@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using Newtonsoft.Json.Linq;
+using System.Threading;
 
 namespace desafio_framework_andressanowasyk
 {
@@ -20,14 +23,17 @@ namespace desafio_framework_andressanowasyk
                 switch (opcaoUsuario) {
                     case "1":
                         // Listar Posts
+                        GetSomething("posts");
                         break;
 
                     case "2":
                         // Listar Albums
+                        GetSomething("albums");
                         break;
 
                     case "3":
                         // Listar ToDos
+                        GetSomething("todos");
                         break;
 
                     case "4":
@@ -65,12 +71,41 @@ namespace desafio_framework_andressanowasyk
                
         }
 
-        private static void ObterInfoJsonPlaceHolder() {
+        public static async void GetSomething(string something)
+        {
+            string baseUrl = "https://jsonplaceholder.typicode.com/" + something;
 
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    using (HttpResponseMessage res = await client.GetAsync(baseUrl))
+                    {
+                        using (HttpContent content = res.Content)
+                        {
+                            var data = await content.ReadAsStringAsync();
+                            if (data != null)
+                            {
+                                Console.WriteLine("data ------ {0}", data);
+                            } else
+                            {
+                                Console.WriteLine("NO Data -----------");
+                            }
+                        }
+                    }
+
+                }
+            } catch (Exception exception)
+            {
+                Console.WriteLine("Exeption Hit -------------");
+                Console.WriteLine(exception);
+            }
         }
 
         private static string ObterOpcaoUsuario() {
-            
+
+            Thread.Sleep(2000);
+
             Console.WriteLine();
             Console.WriteLine("Desafio FrameWork Padawans 2021");
             Console.WriteLine("May the Force be With You");

@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Jd045d/yqhI+jYMvDpHIRvds6XzItuvdwnIspo3ZqnEtgwLPPpbIXmgSK5zF1sngxpGvXcXSChU+7Z06zwzVTw==",
+  "dgSpecHash": "+BtY0uzzUhsi+b02tt5u7dfpRI0o3v57CXnZIVyOxIR4o23uVGpibGNYdD+SGlN7KsIM4MtRvPwvFchNopf8lQ==",
   "success": true,
   "projectFilePath": "/Users/andressanowasyk/Documents/GitHub/desafio-framework-estagio/desafio-framework-andressanowasyk/desafio-framework-andressanowasyk.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/andressanowasyk/.nuget/packages/newtonsoft.json/12.0.3/newtonsoft.json.12.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

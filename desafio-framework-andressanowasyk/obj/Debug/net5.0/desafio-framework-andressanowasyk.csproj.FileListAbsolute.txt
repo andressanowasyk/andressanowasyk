@@ -13,3 +13,5 @@
 /Users/andressanowasyk/Documents/GitHub/desafio-framework-estagio/desafio-framework-andressanowasyk/obj/Debug/net5.0/ref/desafio-framework-andressanowasyk.dll
 /Users/andressanowasyk/Documents/GitHub/desafio-framework-estagio/desafio-framework-andressanowasyk/obj/Debug/net5.0/desafio-framework-andressanowasyk.pdb
 /Users/andressanowasyk/Documents/GitHub/desafio-framework-estagio/desafio-framework-andressanowasyk/obj/Debug/net5.0/desafio-framework-andressanowasyk.genruntimeconfig.cache
+/Users/andressanowasyk/Documents/GitHub/desafio-framework-estagio/desafio-framework-andressanowasyk/bin/Debug/net5.0/Newtonsoft.Json.dll
+/Users/andressanowasyk/Documents/GitHub/desafio-framework-estagio/desafio-framework-andressanowasyk/obj/Debug/net5.0/desafio-framework-andressanowasyk.csproj.CopyComplete
