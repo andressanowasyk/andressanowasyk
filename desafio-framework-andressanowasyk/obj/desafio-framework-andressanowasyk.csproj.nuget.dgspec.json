@@ -14,7 +14,7 @@
         "outputPath": "/Users/andressanowasyk/Documents/GitHub/desafio-framework-estagio/desafio-framework-andressanowasyk/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/andressanowasyk/.nuget/NuGet/NuGet.Config"
+          "/Users/andressanowasyk/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"

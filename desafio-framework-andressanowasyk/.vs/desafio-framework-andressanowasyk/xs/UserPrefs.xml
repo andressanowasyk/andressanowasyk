@@ -1,11 +1,11 @@
 ﻿<Properties StartupConfiguration="{DC160F1D-26C7-41BF-87D3-A6A0491D46A7}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="Program.cs">
     <Files>
-      <File FileName="Program.cs" Line="96" Column="14" />
-      <File FileName="Classes/Post.cs" Line="7" Column="42" />
-      <File FileName="Classes/Album.cs" Line="8" Column="43" />
-      <File FileName="Classes/ToDo.cs" Line="8" Column="15" />
-      <File FileName="Classes/User.cs" Line="16" Column="1" />
+      <File FileName="Program.cs" Line="97" Column="1" />
+      <File FileName="Classes/Post.cs" />
+      <File FileName="Classes/Album.cs" />
+      <File FileName="Classes/ToDo.cs" />
+      <File FileName="Classes/User.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -21,9 +21,6 @@
             </Node>
           </Node>
         </State>
-      </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>

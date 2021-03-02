@@ -14,7 +14,7 @@ namespace desafio_framework_andressanowasyk
             Body = body;
         }
 
-        public void PrintPost()
+        public void Print()
         {
             Console.WriteLine($"ID: {Id}\t | Título: {Title}\t");
             Console.WriteLine("---------");

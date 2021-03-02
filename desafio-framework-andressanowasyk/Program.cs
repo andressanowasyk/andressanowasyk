@@ -25,6 +25,19 @@ namespace desafio_framework_andressanowasyk
             List<ToDo> toDos = new List<ToDo>();
             List<User> users = new List<User>();
 
+            // pegando as informações do Json
+            GetJsonPlaceHolder(something: Global.postStr,
+                                posts: posts,
+                                albums: albums,
+                                toDos: toDos);
+            GetJsonPlaceHolder(something: Global.albumStr,
+                                posts: posts,
+                                albums: albums,
+                                toDos: toDos);
+            GetJsonPlaceHolder(something: Global.toDoStr,
+                                posts: posts,
+                                albums: albums,
+                                toDos: toDos);
             string opcaoUsuario;
             do {
                 opcaoUsuario = ObterOpcaoUsuario();
@@ -34,26 +47,14 @@ namespace desafio_framework_andressanowasyk
                 switch (opcaoUsuario) {
                     case "1":
                         // Listar Posts
-                        GetJsonPlaceHolder(something: Global.postStr,
-                                           posts: posts,
-                                           albums: albums,
-                                           toDos: toDos);
                         break;
 
                     case "2":
                         // Listar Albums
-                        GetJsonPlaceHolder(something: Global.albumStr,
-                                           posts: posts,
-                                           albums: albums,
-                                           toDos: toDos);
                         break;
 
                     case "3":
                         // Listar ToDos
-                        GetJsonPlaceHolder(something: Global.toDoStr,
-                                           posts: posts,
-                                           albums: albums,
-                                           toDos: toDos);
                         break;
 
                     case "4":
@@ -91,6 +92,22 @@ namespace desafio_framework_andressanowasyk
                
         }
 
+        public static void ListarPosts(List<Post> posts)
+        {
+
+        }
+
+        public static bool StrToBool (string str)
+        {
+            if ((str == "true") || (str == "1") || (str == "True"))
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
+
         public static void InsertJson (JArray jsonArray, string something, List<Post> posts, List<Album> albums, List<ToDo> toDos)
         {
             if (something == Global.postStr)
@@ -98,12 +115,9 @@ namespace desafio_framework_andressanowasyk
                 for (int i = 0; i < jsonArray.Count(); i++)
                 {
                     dynamic data = JObject.Parse(jsonArray[i].ToString());
-                    //Console.WriteLine(data["title"]);
-
                     Post p = new Post(id: int.Parse(data["id"].ToString()),
                                       title: data["title"].ToString(),
                                       body: data["body"].ToString());
-                    //p.PrintPost();
                     posts.Add(p);
                 }
 
@@ -115,22 +129,22 @@ namespace desafio_framework_andressanowasyk
                 for (int i = 0; i < jsonArray.Count(); i++)
                 {
                     dynamic data = JObject.Parse(jsonArray[i].ToString());
-                    Album a = new Album(id: data["id"],
-                                        title: data["title"]);
+                    Album a = new Album(id: int.Parse(data["id"].ToString()),
+                                        title: data["title"].ToString());
                     albums.Add(a);
                 }
 
                 return;
             }
 
-            if (something == Global.postStr)
+            if (something == Global.toDoStr)
             {
                 for (int i = 0; i < jsonArray.Count(); i++)
                 {
                     dynamic data = JObject.Parse(jsonArray[i].ToString());
-                    ToDo t = new ToDo(id: data["id"],
-                                       title: data["title"],
-                                       isCompleted: data["completed"]);
+                    ToDo t = new ToDo(id: int.Parse(data["id"].ToString()),
+                                       title: data["title"].ToString(),
+                                       isCompleted: StrToBool(data["completed"].ToString()));
                     toDos.Add(t);
                 }
 

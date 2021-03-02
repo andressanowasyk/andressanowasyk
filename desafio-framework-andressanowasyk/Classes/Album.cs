@@ -1,14 +1,21 @@
-﻿namespace desafio_framework_andressanowasyk
+﻿using System;
+
+namespace desafio_framework_andressanowasyk
 {
     public class Album
     {
-        public int Id { get => Id; set => Id = value; }
-        public string Title { get => Title; set => Title = value; }
+        public int Id { get ; set; }
+        public string Title { get; set; }
 
         public Album(int id, string title)
         {
             Id = id;
             Title = title;
+        }
+
+        public void Print()
+        {
+            Console.WriteLine($"ID: {Id}\t | Título: {Title}\t");
         }
 
     }

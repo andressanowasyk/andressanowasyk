@@ -12,6 +12,7 @@ namespace desafio_framework_andressanowasyk
         public List<Post> pots = new List<Post>();
         public int Id { get; set; }
 
+
         
 
     }

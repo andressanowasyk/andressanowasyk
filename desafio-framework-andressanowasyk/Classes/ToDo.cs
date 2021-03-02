@@ -13,5 +13,20 @@ namespace desafio_framework_andressanowasyk
             Title = title;
             IsCompleted = isCompleted;
         }
+
+        public void Print()
+        {
+            char completedSymbol;
+
+            if (IsCompleted)
+            {
+                completedSymbol = '✔';
+            } else
+            {
+                completedSymbol = '▢';
+            }
+
+            Console.WriteLine($"{completedSymbol}   {Title}\t");
+        }
     }
 }
