@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace desafio_framework_andressanowasyk
 {
@@ -6,7 +7,66 @@ namespace desafio_framework_andressanowasyk
     {
         static void Main(string[] args)
         {
-            string opcaoUsuario = ObterOpcaoUsuario();
+            string opcaoUsuario;
+            do {
+                opcaoUsuario = ObterOpcaoUsuario();
+
+                // armazenamento principal
+                List<Post> posts = new List<Post>();
+                List<Album> albums = new List<Album>();
+                List<ToDo> toDos = new List<ToDo>();
+                List<User> users = new List<User>();
+
+                switch (opcaoUsuario) {
+                    case "1":
+                        // Listar Posts
+                        break;
+
+                    case "2":
+                        // Listar Albums
+                        break;
+
+                    case "3":
+                        // Listar ToDos
+                        break;
+
+                    case "4":
+                        // Listar Usuarios
+                        break;
+
+                    case "5":
+                        // Listar Post, Album, ToDo por Usuário
+                        break;
+                    
+                    case "6":
+                        // Adicionar Post
+                        break;
+
+                    case "7":
+                        // Adicionar Album
+                        break;
+
+                    case "8":
+                        // Adicionar ToDo
+                        break;
+
+                    case "9":
+                        // Adicionar Usuario
+                        break;
+
+                    case "C":
+                        Console.Clear();
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                } 
+            } while (opcaoUsuario.ToUpper() != "X");
+               
+        }
+
+        private static void ObterInfoJsonPlaceHolder() {
+
         }
 
         private static string ObterOpcaoUsuario() {
