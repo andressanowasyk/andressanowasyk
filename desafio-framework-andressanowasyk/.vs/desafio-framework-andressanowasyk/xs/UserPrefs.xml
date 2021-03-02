@@ -1,20 +1,29 @@
 ﻿<Properties StartupConfiguration="{DC160F1D-26C7-41BF-87D3-A6A0491D46A7}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="Program.cs">
     <Files>
-      <File FileName="Program.cs" Line="1" Column="1" />
+      <File FileName="Program.cs" Line="96" Column="14" />
+      <File FileName="Classes/Post.cs" Line="7" Column="42" />
+      <File FileName="Classes/Album.cs" Line="8" Column="43" />
+      <File FileName="Classes/ToDo.cs" Line="8" Column="15" />
+      <File FileName="Classes/User.cs" Line="16" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="desafio-framework-andressanowasyk" expanded="True">
             <Node name="desafio-framework-andressanowasyk" expanded="True">
-              <Node name="Dependencies" expanded="True" selected="True">
+              <Node name="Dependencies" expanded="True">
                 <Node name="FrameworkReferences" expanded="True" />
+                <Node name="PackageDependencies" expanded="True" />
               </Node>
               <Node name="Classes" expanded="True" />
+              <Node name="Program.cs" selected="True" />
             </Node>
           </Node>
         </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>

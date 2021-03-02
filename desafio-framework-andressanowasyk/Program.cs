@@ -3,37 +3,57 @@ using System.Collections.Generic;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using System.Threading;
+using System.Linq;
 
 namespace desafio_framework_andressanowasyk
 {
     class Program
     {
+        static class Global
+        {
+            public static string postStr = "posts";
+            public static string albumStr = "albums";
+            public static string toDoStr = "todos";
+
+        }
+
         static void Main(string[] args)
         {
+            // armazenamento principal
+            List<Post> posts = new List<Post>();
+            List<Album> albums = new List<Album>();
+            List<ToDo> toDos = new List<ToDo>();
+            List<User> users = new List<User>();
+
             string opcaoUsuario;
             do {
                 opcaoUsuario = ObterOpcaoUsuario();
 
-                // armazenamento principal
-                List<Post> posts = new List<Post>();
-                List<Album> albums = new List<Album>();
-                List<ToDo> toDos = new List<ToDo>();
-                List<User> users = new List<User>();
+
 
                 switch (opcaoUsuario) {
                     case "1":
                         // Listar Posts
-                        GetSomething("posts");
+                        GetJsonPlaceHolder(something: Global.postStr,
+                                           posts: posts,
+                                           albums: albums,
+                                           toDos: toDos);
                         break;
 
                     case "2":
                         // Listar Albums
-                        GetSomething("albums");
+                        GetJsonPlaceHolder(something: Global.albumStr,
+                                           posts: posts,
+                                           albums: albums,
+                                           toDos: toDos);
                         break;
 
                     case "3":
                         // Listar ToDos
-                        GetSomething("todos");
+                        GetJsonPlaceHolder(something: Global.toDoStr,
+                                           posts: posts,
+                                           albums: albums,
+                                           toDos: toDos);
                         break;
 
                     case "4":
@@ -71,7 +91,55 @@ namespace desafio_framework_andressanowasyk
                
         }
 
-        public static async void GetSomething(string something)
+        public static void InsertJson (JArray jsonArray, string something, List<Post> posts, List<Album> albums, List<ToDo> toDos)
+        {
+            if (something == Global.postStr)
+            {
+                for (int i = 0; i < jsonArray.Count(); i++)
+                {
+                    dynamic data = JObject.Parse(jsonArray[i].ToString());
+                    //Console.WriteLine(data["title"]);
+
+                    Post p = new Post(id: int.Parse(data["id"].ToString()),
+                                      title: data["title"].ToString(),
+                                      body: data["body"].ToString());
+                    //p.PrintPost();
+                    posts.Add(p);
+                }
+
+                return;
+            }
+
+            if (something == Global.albumStr)
+            {
+                for (int i = 0; i < jsonArray.Count(); i++)
+                {
+                    dynamic data = JObject.Parse(jsonArray[i].ToString());
+                    Album a = new Album(id: data["id"],
+                                        title: data["title"]);
+                    albums.Add(a);
+                }
+
+                return;
+            }
+
+            if (something == Global.postStr)
+            {
+                for (int i = 0; i < jsonArray.Count(); i++)
+                {
+                    dynamic data = JObject.Parse(jsonArray[i].ToString());
+                    ToDo t = new ToDo(id: data["id"],
+                                       title: data["title"],
+                                       isCompleted: data["completed"]);
+                    toDos.Add(t);
+                }
+
+                return;
+            }
+
+        }
+
+        public static async void GetJsonPlaceHolder(string something, List<Post> posts, List<Album> albums, List<ToDo> toDos)
         {
             string baseUrl = "https://jsonplaceholder.typicode.com/" + something;
 
@@ -86,7 +154,15 @@ namespace desafio_framework_andressanowasyk
                             var data = await content.ReadAsStringAsync();
                             if (data != null)
                             {
-                                Console.WriteLine("data ------ {0}", data);
+
+                                JArray jsonArray = JArray.Parse(data);
+                                //dynamic dado = JObject.Parse(jsonArray[1].ToString());
+                                //Console.WriteLine("data ------ {0}", dado["userId"]);
+                                InsertJson(jsonArray: jsonArray,
+                                           something: something,
+                                           posts: posts,
+                                           albums: albums,
+                                           toDos: toDos);
                             } else
                             {
                                 Console.WriteLine("NO Data -----------");
@@ -104,7 +180,7 @@ namespace desafio_framework_andressanowasyk
 
         private static string ObterOpcaoUsuario() {
 
-            Thread.Sleep(2000);
+            //Thread.Sleep(2000);
 
             Console.WriteLine();
             Console.WriteLine("Desafio FrameWork Padawans 2021");
