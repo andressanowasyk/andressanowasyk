@@ -62,7 +62,7 @@ namespace desafio_framework_andressanowasyk
 
                     case "4":
                         // Listar Usuarios
-                        
+                        ListUsers(usersMap);
                         break;
 
                     case "5":
@@ -101,6 +101,22 @@ namespace desafio_framework_andressanowasyk
                
         }
 
+        private static void ListUsers(SortedDictionary<int, User> usersMap)
+        {
+            Console.WriteLine();
+            foreach(var pair in usersMap)
+            {
+                Console.WriteLine($"User {pair.Key}");
+                Console.WriteLine($"Total Posts: {pair.Value.posts.Count}");
+                Console.WriteLine($"Total Albums: {pair.Value.albums.Count}");
+                Console.WriteLine($"Total To-Dos: {pair.Value.todos.Count}");
+                Console.WriteLine();
+            }
+        }
+
+
+
+        // listagem de post, album e to-dos
         private static void List(string type, SortedDictionary<int, User> usersMap)
         {
             if (type == Global.postStr)
