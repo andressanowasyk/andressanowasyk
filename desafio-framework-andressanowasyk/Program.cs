@@ -23,21 +23,24 @@ namespace desafio_framework_andressanowasyk
             List<Post> posts = new List<Post>();
             List<Album> albums = new List<Album>();
             List<ToDo> toDos = new List<ToDo>();
-            List<User> users = new List<User>();
+            SortedDictionary<int, User> usersMap = new SortedDictionary<int, User>();
 
             // pegando as informações do Json
             GetJsonPlaceHolder(something: Global.postStr,
                                 posts: posts,
                                 albums: albums,
-                                toDos: toDos);
+                                toDos: toDos,
+                                users: usersMap);
             GetJsonPlaceHolder(something: Global.albumStr,
                                 posts: posts,
                                 albums: albums,
-                                toDos: toDos);
+                                toDos: toDos,
+                                users: usersMap);
             GetJsonPlaceHolder(something: Global.toDoStr,
                                 posts: posts,
                                 albums: albums,
-                                toDos: toDos);
+                                toDos: toDos,
+                                users: usersMap);
             string opcaoUsuario;
             do {
                 opcaoUsuario = ObterOpcaoUsuario();
@@ -85,6 +88,11 @@ namespace desafio_framework_andressanowasyk
                         Console.Clear();
                         break;
 
+                    case "X":
+                        Console.Clear();
+                        Console.WriteLine("Obrigada :)");
+                        break;
+
                     default:
                         throw new ArgumentOutOfRangeException();
                 } 
@@ -92,9 +100,26 @@ namespace desafio_framework_andressanowasyk
                
         }
 
+        // se já houver um usuario com id irei retornar o usuario
+        // se nao houver, irei adicioná-lo
+        public static User AddUser(int id, SortedDictionary<int, User> users)
+        {
+            User u = new User();
+            try
+            {
+                users.Add(id,u);
+
+            } catch (ArgumentException)
+            {
+                
+            }
+
+            return users[id];
+        }
+
         public static void ListarPosts(List<Post> posts)
         {
-
+            
         }
 
         public static bool StrToBool (string str)
@@ -108,7 +133,7 @@ namespace desafio_framework_andressanowasyk
             }
         }
 
-        public static void InsertJson (JArray jsonArray, string something, List<Post> posts, List<Album> albums, List<ToDo> toDos)
+        public static void InsertJson (JArray jsonArray, string something, List<Post> posts, List<Album> albums, List<ToDo> toDos, SortedDictionary<int, User> users)
         {
             if (something == Global.postStr)
             {
@@ -153,7 +178,7 @@ namespace desafio_framework_andressanowasyk
 
         }
 
-        public static async void GetJsonPlaceHolder(string something, List<Post> posts, List<Album> albums, List<ToDo> toDos)
+        public static async void GetJsonPlaceHolder(string something, List<Post> posts, List<Album> albums, List<ToDo> toDos, SortedDictionary<int, User> users)
         {
             string baseUrl = "https://jsonplaceholder.typicode.com/" + something;
 
@@ -176,7 +201,8 @@ namespace desafio_framework_andressanowasyk
                                            something: something,
                                            posts: posts,
                                            albums: albums,
-                                           toDos: toDos);
+                                           toDos: toDos,
+                                           users: users);
                             } else
                             {
                                 Console.WriteLine("NO Data -----------");
