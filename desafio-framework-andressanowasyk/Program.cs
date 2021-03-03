@@ -1,9 +1,14 @@
-﻿using System;
+﻿// Desafio FrameWork Padawans
+// Autora: Andressa Nowasyk
+// Criação de uma aplicação para listar postagens, alguns e to-dos vindos da API jsonplaceholder
+
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using System.Threading;
 using System.Linq;
+using System.Net;
 
 namespace desafio_framework_andressanowasyk
 {
@@ -14,33 +19,25 @@ namespace desafio_framework_andressanowasyk
             public static string postStr = "posts";
             public static string albumStr = "albums";
             public static string toDoStr = "todos";
+            public static string adress = "https://jsonplaceholder.typicode.com/";
 
         }
 
         static void Main(string[] args)
         {
             // armazenamento principal
-            List<Post> posts = new List<Post>();
-            List<Album> albums = new List<Album>();
-            List<ToDo> toDos = new List<ToDo>();
+
             SortedDictionary<int, User> usersMap = new SortedDictionary<int, User>();
 
             // pegando as informações do Json
             GetJsonPlaceHolder(something: Global.postStr,
-                                posts: posts,
-                                albums: albums,
-                                toDos: toDos,
                                 users: usersMap);
             GetJsonPlaceHolder(something: Global.albumStr,
-                                posts: posts,
-                                albums: albums,
-                                toDos: toDos,
                                 users: usersMap);
             GetJsonPlaceHolder(something: Global.toDoStr,
-                                posts: posts,
-                                albums: albums,
-                                toDos: toDos,
                                 users: usersMap);
+
+
             string opcaoUsuario;
             do {
                 opcaoUsuario = ObterOpcaoUsuario();
@@ -50,18 +47,22 @@ namespace desafio_framework_andressanowasyk
                 switch (opcaoUsuario) {
                     case "1":
                         // Listar Posts
+                        List(Global.postStr, usersMap);
                         break;
 
                     case "2":
                         // Listar Albums
+                        List(Global.albumStr, usersMap);
                         break;
 
                     case "3":
                         // Listar ToDos
+                        List(Global.toDoStr, usersMap);
                         break;
 
                     case "4":
                         // Listar Usuarios
+                        
                         break;
 
                     case "5":
@@ -100,6 +101,39 @@ namespace desafio_framework_andressanowasyk
                
         }
 
+        private static void List(string type, SortedDictionary<int, User> usersMap)
+        {
+            if (type == Global.postStr)
+            {
+                // listar posts
+                foreach (var pair in usersMap)
+                {
+                    pair.Value.PrintPosts();
+                }
+                return;
+            }
+
+            if (type == Global.albumStr)
+            {
+                // listar albuns
+                foreach (var pair in usersMap)
+                {
+                    pair.Value.PrintAlbums();
+                }
+                return;
+            }
+
+            if (type == Global.toDoStr)
+            {
+                // listar to-dos
+                foreach (var pair in usersMap)
+                {
+                    pair.Value.PrintToDos();
+                }
+                return;
+            }
+        }
+
         // se já houver um usuario com id irei retornar o usuario
         // se nao houver, irei adicioná-lo
         public static void AddUser(int id, SortedDictionary<int, User> users)
@@ -116,6 +150,8 @@ namespace desafio_framework_andressanowasyk
 
         }
 
+
+        // tratamento do "completed" que aparece nos to-dos
         public static bool StrToBool (string str)
         {
             if ((str == "true") || (str == "1") || (str == "True"))
@@ -127,7 +163,8 @@ namespace desafio_framework_andressanowasyk
             }
         }
 
-        public static void InsertJson (JArray jsonArray, string something, List<Post> posts, List<Album> albums, List<ToDo> toDos, SortedDictionary<int, User> users)
+        // pegando a informação do JsonPlaceHolder e criando objetos a partir deles
+        public static void InsertJson (JArray jsonArray, string something, SortedDictionary<int, User> users)
         {
             if (something == Global.postStr)
             {
@@ -144,7 +181,6 @@ namespace desafio_framework_andressanowasyk
                                       body: data["body"].ToString());
 
                     users[userId].posts.Add(p);
-                    posts.Add(p);
 
                 }
 
@@ -164,7 +200,6 @@ namespace desafio_framework_andressanowasyk
                                         title: data["title"].ToString());
 
                     users[userId].albums.Add(a);
-                    albums.Add(a);
                 }
 
                 return;
@@ -184,7 +219,6 @@ namespace desafio_framework_andressanowasyk
                                        isCompleted: StrToBool(data["completed"].ToString()));
 
                     users[userId].todos.Add(t);
-                    toDos.Add(t);
                 }
 
                 return;
@@ -192,43 +226,26 @@ namespace desafio_framework_andressanowasyk
 
         }
 
-        public static async void GetJsonPlaceHolder(string something, List<Post> posts, List<Album> albums, List<ToDo> toDos, SortedDictionary<int, User> users)
+        // baixando o arquivo json do JsonPlaceHolder
+        public static void GetJsonPlaceHolder(string something, SortedDictionary<int, User> users)
         {
-            string baseUrl = "https://jsonplaceholder.typicode.com/" + something;
-
+            string jsonStr;
+            JArray jsonArray;
             try
             {
-                using (HttpClient client = new HttpClient())
-                {
-                    using (HttpResponseMessage res = await client.GetAsync(baseUrl))
-                    {
-                        using (HttpContent content = res.Content)
-                        {
-                            var data = await content.ReadAsStringAsync();
-                            if (data != null)
-                            {
+                WebClient wc = new WebClient();
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                jsonStr = wc.DownloadString(Global.adress + something);
+                jsonArray = JArray.Parse(jsonStr);
+                InsertJson(jsonArray: jsonArray,
+                           something: something,
+                           users: users);
 
-                                JArray jsonArray = JArray.Parse(data);
-                                //dynamic dado = JObject.Parse(jsonArray[1].ToString());
-                                //Console.WriteLine("data ------ {0}", dado["userId"]);
-                                InsertJson(jsonArray: jsonArray,
-                                           something: something,
-                                           posts: posts,
-                                           albums: albums,
-                                           toDos: toDos,
-                                           users: users);
-                            } else
-                            {
-                                Console.WriteLine("NO Data -----------");
-                            }
-                        }
-                    }
-
-                }
-            } catch (Exception exception)
+            }
+            catch (WebException we)
             {
-                Console.WriteLine("Exeption Hit -------------");
-                Console.WriteLine(exception);
+                Console.WriteLine("Erro ao baixar informações de JsonPlaceHolder");
+                Console.WriteLine(we.ToString());
             }
         }
 
