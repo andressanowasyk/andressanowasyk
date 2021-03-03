@@ -102,7 +102,7 @@ namespace desafio_framework_andressanowasyk
 
         // se já houver um usuario com id irei retornar o usuario
         // se nao houver, irei adicioná-lo
-        public static User AddUser(int id, SortedDictionary<int, User> users)
+        public static void AddUser(int id, SortedDictionary<int, User> users)
         {
             User u = new User();
             try
@@ -114,12 +114,6 @@ namespace desafio_framework_andressanowasyk
                 
             }
 
-            return users[id];
-        }
-
-        public static void ListarPosts(List<Post> posts)
-        {
-            
         }
 
         public static bool StrToBool (string str)
@@ -140,10 +134,18 @@ namespace desafio_framework_andressanowasyk
                 for (int i = 0; i < jsonArray.Count(); i++)
                 {
                     dynamic data = JObject.Parse(jsonArray[i].ToString());
+
+                    int userId = int.Parse(data["userId"].ToString());
+                    AddUser(userId, users);
+
+                    // aqui eu ja tenho certeza que o usuario existe, entao posso adicionar o post na sua lista
                     Post p = new Post(id: int.Parse(data["id"].ToString()),
                                       title: data["title"].ToString(),
                                       body: data["body"].ToString());
+
+                    users[userId].posts.Add(p);
                     posts.Add(p);
+
                 }
 
                 return;
@@ -154,8 +156,14 @@ namespace desafio_framework_andressanowasyk
                 for (int i = 0; i < jsonArray.Count(); i++)
                 {
                     dynamic data = JObject.Parse(jsonArray[i].ToString());
+
+                    int userId = int.Parse(data["userId"].ToString());
+                    AddUser(userId, users);
+
                     Album a = new Album(id: int.Parse(data["id"].ToString()),
                                         title: data["title"].ToString());
+
+                    users[userId].albums.Add(a);
                     albums.Add(a);
                 }
 
@@ -167,9 +175,15 @@ namespace desafio_framework_andressanowasyk
                 for (int i = 0; i < jsonArray.Count(); i++)
                 {
                     dynamic data = JObject.Parse(jsonArray[i].ToString());
+
+                    int userId = int.Parse(data["userId"].ToString());
+                    AddUser(userId, users);
+
                     ToDo t = new ToDo(id: int.Parse(data["id"].ToString()),
                                        title: data["title"].ToString(),
                                        isCompleted: StrToBool(data["completed"].ToString()));
+
+                    users[userId].todos.Add(t);
                     toDos.Add(t);
                 }
 
