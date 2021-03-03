@@ -67,6 +67,7 @@ namespace desafio_framework_andressanowasyk
 
                     case "5":
                         // Listar Post, Album, ToDo por Usuário
+                        ListByUser(usersMap);
                         break;
                     
                     case "6":
@@ -101,16 +102,114 @@ namespace desafio_framework_andressanowasyk
                
         }
 
+        private static void ListSomethingByUser(User user)
+        {
+            bool unkownCommand = false;
+            ConsoleKeyInfo cki;
+            do
+            {
+                Console.WriteLine();
+                Console.WriteLine("O que deseja listar?");
+                Console.WriteLine("1 - Posts");
+                Console.WriteLine("2 - Albums");
+                Console.WriteLine("3 - To-Dos");
+                Console.WriteLine("4 - Apenas To-Dos Completos");
+                Console.WriteLine("5 - Apenas To-Dos Não Completos");
+                Console.WriteLine("6 - Voltar");
+                cki = Console.ReadKey();
+
+                switch (cki.Key)
+                {
+                    case ConsoleKey.D1:
+                        // Listar Posts
+                        Console.WriteLine();
+                        user.PrintPosts();
+                        break;
+
+                    case ConsoleKey.D2:
+                        // Listar Albums
+                        Console.WriteLine();
+                        user.PrintAlbums();
+                        break;
+
+                    case ConsoleKey.D3:
+                        // Listar To-Dos
+                        Console.WriteLine();
+                        user.PrintToDos();
+                        break;
+
+                    case ConsoleKey.D4:
+                        // Listar To-Dos Completos
+                        Console.WriteLine();
+                        user.PrintToDosCompleted();
+                        break;
+
+                    case ConsoleKey.D5:
+                        // Listar To-Dos Incompletos
+                        Console.WriteLine();
+                        user.PrintToDosIncompleted();
+                        break;
+
+                    case ConsoleKey.D6:
+                        // Voltar para o Menu Principal
+                        unkownCommand = true;
+                        break;
+
+                    default:
+                        Console.WriteLine();
+                        Console.WriteLine("Comando não encontrado. Tente Novamente.");
+                        break;
+                }
+            } while (!unkownCommand);
+
+            return;
+
+        }
+
+
+        private static void ListByUser(SortedDictionary<int, User> usersMap)
+        {
+            Console.WriteLine("Usuarios Disponíveis: ");
+            foreach (var pair in usersMap)
+            {
+                Console.Write(pair.Key + " | ");
+            }
+            Console.WriteLine();
+            Console.WriteLine("Qual usuário deseja Listar?");
+            string opcaoUsuario = Console.ReadLine().ToUpper();
+            if (DoesUserExists(int.Parse(opcaoUsuario), usersMap))
+            {
+                usersMap[int.Parse(opcaoUsuario)].PrintUser();
+                ListSomethingByUser(usersMap[int.Parse(opcaoUsuario)]);
+
+            } else {
+                Console.WriteLine("Usuário não encontrado");
+                Thread.Sleep(500);
+            }
+
+        }
+
+        private static bool DoesUserExists (int id, SortedDictionary<int, User> usersMap)
+        {
+            bool exists = false;
+            foreach (var pair in usersMap)
+            {
+                if (pair.Key == id)
+                {
+                    exists = true;
+                }
+            }
+
+            return exists;
+        }
+
         private static void ListUsers(SortedDictionary<int, User> usersMap)
         {
             Console.WriteLine();
             foreach(var pair in usersMap)
             {
                 Console.WriteLine($"User {pair.Key}");
-                Console.WriteLine($"Total Posts: {pair.Value.posts.Count}");
-                Console.WriteLine($"Total Albums: {pair.Value.albums.Count}");
-                Console.WriteLine($"Total To-Dos: {pair.Value.todos.Count}");
-                Console.WriteLine();
+                pair.Value.PrintUser();
             }
         }
 

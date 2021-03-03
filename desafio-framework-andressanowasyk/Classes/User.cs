@@ -34,41 +34,63 @@ namespace desafio_framework_andressanowasyk
 
         public void PrintToDos()
         {
-            //int i = 0;
             foreach (ToDo t in todos)
             {
                 t.Print();
-                //i++;
-                //if (!WannaContinue(i, 5))
-                //{
-                //    break;
-                //}
             }
 
             return;
         }
 
-        //// verifica se quer continuar a cada qtde que o i atinge
-        //private static bool WannaContinue(int i, int qtde)
-        //{
-        //    if (i % qtde == 0)
-        //    {
-        //        Console.WriteLine();
-        //        Console.WriteLine("X para sair, Qualquer tecla para continuar");
-        //        Console.WriteLine();
-        //        //ConsoleKeyInfo key = Console.ReadKey(true);
-        //        if (Console.ReadKey().Key == ConsoleKey.X)
-        //        {
-        //            return false;
-        //        }
-        //        else
-        //        {
-        //            return true;
-        //        }
+        public void PrintToDosCompleted()
+        {
+            foreach (ToDo t in todos)
+            {
+                if (t.IsCompleted)
+                {
+                    t.Print();
+                }
+            }
+        }
 
-        //    }
+        public void PrintToDosIncompleted()
+        {
+            foreach (ToDo t in todos)
+            {
+                if (!t.IsCompleted)
+                {
+                    t.Print();
+                }
+            }
+        }
 
-        //    return true;
-        //}
+        public int GetCompletedToDos()
+        {
+            int count = 0;
+            foreach (var t in todos)
+            {
+                if (t.IsCompleted)
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        public int GetIncompletedToDos()
+        {
+            return todos.Count - GetCompletedToDos();
+        }
+
+        public void PrintUser()
+        {
+            Console.WriteLine($"Total Posts: {posts.Count}");
+            Console.WriteLine($"Total Albums: {albums.Count}");
+            Console.WriteLine($"Total To-Dos: {todos.Count} | ✔ Completos: {GetCompletedToDos()}");
+            Console.WriteLine();
+        }
+
+
     }
 }
