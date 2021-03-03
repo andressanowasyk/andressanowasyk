@@ -20,6 +20,8 @@ namespace desafio_framework_andressanowasyk
             public static string albumStr = "albums";
             public static string toDoStr = "todos";
             public static string adress = "https://jsonplaceholder.typicode.com/";
+            public static string commandNotFound = "Comando não encontrado. Tente Novamente.";
+            public static string userNotFound = "Usuário não encontrado.";
 
         }
 
@@ -69,22 +71,6 @@ namespace desafio_framework_andressanowasyk
                         // Listar Post, Album, ToDo por Usuário
                         ListByUser(usersMap);
                         break;
-                    
-                    case "6":
-                        // Adicionar Post
-                        break;
-
-                    case "7":
-                        // Adicionar Album
-                        break;
-
-                    case "8":
-                        // Adicionar ToDo
-                        break;
-
-                    case "9":
-                        // Adicionar Usuario
-                        break;
 
                     case "C":
                         Console.Clear();
@@ -96,7 +82,8 @@ namespace desafio_framework_andressanowasyk
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException();
+                        Console.WriteLine(Global.commandNotFound);
+                        break;
                 } 
             } while (opcaoUsuario.ToUpper() != "X");
                
@@ -157,7 +144,7 @@ namespace desafio_framework_andressanowasyk
 
                     default:
                         Console.WriteLine();
-                        Console.WriteLine("Comando não encontrado. Tente Novamente.");
+                        Console.WriteLine(Global.commandNotFound);
                         break;
                 }
             } while (!unkownCommand);
@@ -167,7 +154,9 @@ namespace desafio_framework_andressanowasyk
         }
 
 
-        private static void ListByUser(SortedDictionary<int, User> usersMap)
+
+
+        private static void SimpleUserList (SortedDictionary<int, User> usersMap)
         {
             Console.WriteLine("Usuarios Disponíveis: ");
             foreach (var pair in usersMap)
@@ -175,6 +164,13 @@ namespace desafio_framework_andressanowasyk
                 Console.Write(pair.Key + " | ");
             }
             Console.WriteLine();
+        }
+
+
+        private static void ListByUser(SortedDictionary<int, User> usersMap)
+        {
+            SimpleUserList(usersMap);
+
             Console.WriteLine("Qual usuário deseja Listar?");
             string opcaoUsuario = Console.ReadLine().ToUpper();
             if (DoesUserExists(int.Parse(opcaoUsuario), usersMap))
@@ -183,7 +179,7 @@ namespace desafio_framework_andressanowasyk
                 ListSomethingByUser(usersMap[int.Parse(opcaoUsuario)]);
 
             } else {
-                Console.WriteLine("Usuário não encontrado");
+                Console.WriteLine(Global.userNotFound);
                 Thread.Sleep(500);
             }
 
@@ -371,6 +367,7 @@ namespace desafio_framework_andressanowasyk
             Console.WriteLine();
             Console.WriteLine("Desafio FrameWork Padawans 2021");
             Console.WriteLine("May the Force be With You");
+            Console.WriteLine("Autora: Andressa Nowasyk");
             Console.WriteLine("Escolha Sabiamente uma Opção Abaixo");
             Console.WriteLine();
             Console.WriteLine("1 - Listar Todos Posts");
@@ -378,10 +375,6 @@ namespace desafio_framework_andressanowasyk
             Console.WriteLine("3 - Listar Todos ToDos");
             Console.WriteLine("4 - Listar Usuários");
             Console.WriteLine("5 - Listar Posts, Albums, ToDos por Usuário");
-            Console.WriteLine("6 - Adicionar Posts");
-            Console.WriteLine("7 - Adicionar Albums");
-            Console.WriteLine("8 - Adicionar ToDos");
-            Console.WriteLine("9 - Adicionar Usuario");
             Console.WriteLine("C - Limpar Tela");
             Console.WriteLine("X - Sair");
             Console.WriteLine();
